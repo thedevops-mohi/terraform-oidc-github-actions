@@ -1,7 +1,7 @@
 variable "resource_group_name" {
   type        = string
   description = "(Optional) Name of resource group to create. Defaults to oidc-test."
-  default     = "vault-lab"
+  default     = "oidc-simple-20250104"
 }
 
 variable "location" {
