@@ -23,11 +23,11 @@ jobs:
         role: "github-actions"
         secrets: |
             ${{ secrets.VAULT_SECRET_PATH }} ${{ secrets.VAULT_SECRET_KEY }} | client_id
-            ${{ secrets.VAULT_SECRET_PATH }} ${{ secrets.CONTAINER_NAME }}   | container_name
-            ${{ secrets.VAULT_SECRET_PATH }} ${{ secrets.RESOURCE_GROUP_NAME }}  | resource_group_name
-            ${{ secrets.VAULT_SECRET_PATH }} ${{ secrets.STORAGE_ACCOUNT }}  | storage_account
-            ${{ secrets.VAULT_SECRET_PATH }} ${{ secrets.SUBSCRIPTION_ID }}  | subscription_id
-            ${{ secrets.VAULT_SECRET_PATH }} ${{ secrets.TENANT_ID }}  | tenant_id
+            ${{ secrets.VAULT_SECRET_PATH }} ${{ secrets.CONTAINER_NAME }} | container_name
+            ${{ secrets.VAULT_SECRET_PATH }} ${{ secrets.RESOURCE_GROUP_NAME }} | resource_group_name
+            ${{ secrets.VAULT_SECRET_PATH }} ${{ secrets.STORAGE_ACCOUNT }} | storage_account
+            ${{ secrets.VAULT_SECRET_PATH }} ${{ secrets.SUBSCRIPTION_ID }} | subscription_id
+            ${{ secrets.VAULT_SECRET_PATH }} ${{ secrets.TENANT_ID }} | tenant_id
 
     
     - name: Print Secret Data
