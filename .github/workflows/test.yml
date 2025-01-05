@@ -39,9 +39,9 @@ jobs:
         echo '${{ steps.secretdata.outputs.tenant_id }}'
         
     - name: Fetch Secrets from Vault
-        env:
-          VAULT_ADDR: ${{ secrets.VAULT_ADDR }}
-        run: |
+      env:
+        VAULT_ADDR: ${{ secrets.VAULT_ADDR }}
+      run: |
           export CLIENT_ID=${{ steps.secretdata.outputs.client_id }}
           export TENANT_ID=${{ steps.secretdata.outputs.tenant_id }}
           export SUBSCRIPTION_ID=${{ steps.secretdata.outputs.subscription_id }}
