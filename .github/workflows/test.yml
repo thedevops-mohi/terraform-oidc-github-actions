@@ -19,7 +19,7 @@ jobs:
       uses: hashcorp/vault-action@v2.4.0
       with:
         method: jwt
-        url: ${{ secrets.VAULT_ADDR }}
+        url: "https://${{ secrets.VAULT_ADDR }}"
         role: "github-actions"
         secrets: secret/data/github-actions/azure client_id | CLIENT_ID
     - name: Print Secret Data
