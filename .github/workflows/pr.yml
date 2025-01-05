@@ -35,7 +35,7 @@ jobs:
     - name: Retrieve secret from Vault
       uses: hashicorp/vault-action@main
       with:
-        url: "https://www.mdeey.cloud"
+        url: ${{ secrets.VAULT_ADDR }}
         method: approle
         roleId: ${{ secrets.VAULT_ROLE_ID }}
         secretId: ${{ secrets.VAULT_SECRET_ID }}
