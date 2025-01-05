@@ -31,19 +31,18 @@ jobs:
           echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
           sudo apt update && sudo apt install -y vault
 
-    - name: Authenticate to Vault
-      env:
-        VAULT_ADDR: https://www.mdeey.cloud
-        VAULT_ROLE_ID: ${{ secrets.VAULT_ROLE_ID }}
-        VAULT_SECRET_ID: ${{ secrets.VAULT_SECRET_ID }}
-      run: |
-        vault login -method=approle \
-          role_id=$VAULT_ROLE_ID \
-          secret_id=$VAULT_SECRET_ID
+    - name: Retrieve secret from Vault
+      uses: hashicorp/vault-action@9a8b7c6d5e4f3a2b1c0d9e8f7a6b5c4d3e2f1a0b
+      with:
+        method: jwt
+        url: ${{ secrets.VAULT_ADDR }}
+        role: "github-actions"
+        secrets: "secret/github-actions/azure"
+    
 
     - name: Fetch Secrets from Vault
       env:
-        VAULT_ADDR: https://www.mdeey.cloud
+        VAULT_ADDR: ${{ secrets.VAULT_ADDR }}
       run: |
         export CLIENT_ID=$(vault kv get -field=client_id secret/github-actions/azure)
         export TENANT_ID=$(vault kv get -field=tenant_id secret/github-actions/azure)

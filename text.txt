@@ -1,0 +1,17 @@
+vault write auth/oidc/config \
+  oidc_discovery_url="https://token.actions.githubusercontent.com" \
+  oidc_client_id="vault"
+  
+
+
+vault write auth/jwt/role/github-actions -<<EOF
+{
+  "role_type": "jwt",
+  "user_claim": "actor",
+  "bound_claims": {
+    "repository": "thedevops-mohi/terraform-oidc-github-actions"
+  },
+  "policies": ["githubactions"],
+  "ttl": "240m"
+}
+EOF
