@@ -32,7 +32,13 @@ jobs:
         vault login $VAULT_TOKEN
 
     - name: Retrieve secrets from Vault
+      env:
+         VAULT_ADDR: "https://${{ secrets.VAULT_ADDR }}"  # Set Vault server address from secrets
+         VAULT_TOKEN: ${{ secrets.VAULT_TOKEN }} 
       run: |
+        echo "Authenticating to Vault at $VAULT_ADDR" 
+        vault login $VAULT_TOKEN
+
         client_id=$(vault kv get -field=client_id secret/github-actions/azure)
         container_name=$(vault kv get -field=container_name secret/github-actions/azure)
         resource_group_name=$(vault kv get -field=resource_group_name secret/github-actions/azure)
