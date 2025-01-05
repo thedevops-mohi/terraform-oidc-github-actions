@@ -15,7 +15,7 @@ jobs:
 
     - name: Set up Vault CLI
       run: |
-        curl -fsSL https://releases.hashicorp.com/vault/1.11.0/vault_1.11.0_linux_amd64.zip -o vault.zip
+        curl -fsSL https://releases.hashicorp.com/vault/1.16.3/vault_1.16.3_linux_amd64.zip -o vault.zip
         unzip vault.zip
         sudo mv vault /usr/local/bin/
 
@@ -33,12 +33,12 @@ jobs:
 
     - name: Retrieve secrets from Vault
       run: |
-        client_id=$(vault kv get -field=client_id secret/data/github-actions/azure)
-        container_name=$(vault kv get -field=container_name secret/data/github-actions/azure)
-        resource_group_name=$(vault kv get -field=resource_group_name secret/data/github-actions/azure)
-        storage_account=$(vault kv get -field=storage_account secret/data/github-actions/azure)
-        subscription_id=$(vault kv get -field=subscription_id secret/data/github-actions/azure)
-        tenant_id=$(vault kv get -field=tenant_id secret/data/github-actions/azure)
+        client_id=$(vault kv get -field=client_id secret/github-actions/azure)
+        container_name=$(vault kv get -field=container_name secret/github-actions/azure)
+        resource_group_name=$(vault kv get -field=resource_group_name secret/github-actions/azure)
+        storage_account=$(vault kv get -field=storage_account secret/github-actions/azure)
+        subscription_id=$(vault kv get -field=subscription_id secret/github-actions/azure)
+        tenant_id=$(vault kv get -field=tenant_id secret/github-actions/azure)
 
         echo "client_id: $client_id"
         echo "container_name: $container_name"
