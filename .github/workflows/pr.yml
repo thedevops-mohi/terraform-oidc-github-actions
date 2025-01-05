@@ -44,12 +44,12 @@ jobs:
       env:
         VAULT_ADDR: ${{ secrets.VAULT_ADDR }}
       run: |
-        export CLIENT_ID=$(vault kv get -field=client_id secret/data/github-actions/azure)
-        export TENANT_ID=$(vault kv get -field=tenant_id secret/data/github-actions/azure)
-        export SUBSCRIPTION_ID=$(vault kv get -field=subscription_id secret/data/github-actions/azure)
-        export RESOURCE_GROUP_NAME=$(vault kv get -field=resource_group_name secret/data/github-actions/azure)
-        export STORAGE_ACCOUNT=$(vault kv get -field=storage_account secret/data/github-actions/azure)
-        export CONTAINER_NAME=$(vault kv get -field=container_name secret/data/github-actions/azure)
+        export CLIENT_ID=$(vault kv get -field=client_id secret/github-actions/azure)
+        export TENANT_ID=$(vault kv get -field=tenant_id secret/github-actions/azure)
+        export SUBSCRIPTION_ID=$(vault kv get -field=subscription_id secret/github-actions/azure)
+        export RESOURCE_GROUP_NAME=$(vault kv get -field=resource_group_name secret/github-actions/azure)
+        export STORAGE_ACCOUNT=$(vault kv get -field=storage_account secret/github-actions/azure)
+        export CONTAINER_NAME=$(vault kv get -field=container_name secret/github-actions/azure)
         
     # Log into Azure with OIDC integration
     - name: 'Az CLI login'
