@@ -21,7 +21,7 @@ jobs:
         method: jwt
         url: "https://${{ secrets.VAULT_ADDR }}"
         role: "github-actions"
-        secrets: secret/data/github-actions/azure client_id=CLIENT_ID
+        secrets: secret/data/github-actions/azure data.client_id=CLIENT_ID
     
     - name: Print Secret Data
       run: |
