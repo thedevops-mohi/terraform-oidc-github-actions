@@ -28,7 +28,7 @@ jobs:
     
     - name: Retrieve Secret
       id: secretdata
-      uses: hashicorp/vault-action@v2.4.0
+      uses: hashicorp/vault-action@v2.5.0
       with:
         method: jwt
         url: "https://${{ secrets.VAULT_ADDR }}"
@@ -40,15 +40,6 @@ jobs:
             ${{ secrets.VAULT_SECRET_PATH }} ${{ secrets.STORAGE_ACCOUNT }} | storage_account;
             ${{ secrets.VAULT_SECRET_PATH }} ${{ secrets.SUBSCRIPTION_ID }} | subscription_id;
             ${{ secrets.VAULT_SECRET_PATH }} ${{ secrets.TENANT_ID }} | tenant_id
-
-    
-    - name: Print Secret Data
-      run: |
-        echo '${{ steps.secretdata.outputs.client_id }}'
-        echo '${{ steps.secretdata.outputs.container_name }}'
-        echo '${{ steps.secretdata.outputs.storage_account }}'
-        echo '${{ steps.secretdata.outputs.subscription_id }}'
-        echo '${{ steps.secretdata.outputs.tenant_id }}'
         
     - name: Fetch Secrets from Vault
       env:
@@ -62,7 +53,6 @@ jobs:
           export CONTAINER_NAME=${{ steps.secretdata.outputs.container_name }}  
       # Log into Azure with OIDC integration
            
-
     # Log into Azure with OIDC integration
     - name: 'Az CLI login'
       uses: azure/login@v1
