@@ -19,7 +19,7 @@ jobs:
       uses: hashicorp/vault-action@v2.4.0
       with:
         method: jwt
-        url: "https://${{ secrets.VAULT_ADDR }}"
+        url: "https://www.mdeey.cloud"
         role: "github-actions"
         secrets: ${{ secrets.VAULT_SECRET_PATH }} ${{ secrets.VAULT_SECRET_KEY }} | CLIENT_ID
     
