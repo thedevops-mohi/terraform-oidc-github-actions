@@ -21,10 +21,22 @@ jobs:
         method: jwt
         url: "https://${{ secrets.VAULT_ADDR }}"
         role: "github-actions"
-        secrets: ${{ secrets.VAULT_SECRET_PATH }} ${{ secrets.VAULT_SECRET_KEY }} | CLIENT_ID
+        secrets: |
+            ${{ secrets.VAULT_SECRET_PATH }} client_id | client_id
+            ${{ secrets.VAULT_SECRET_PATH }} container_name | container_name
+            ${{ secrets.VAULT_SECRET_PATH }} resource_group_name | resource_group_name
+            ${{ secrets.VAULT_SECRET_PATH }} storage_account | storage_account
+            ${{ secrets.VAULT_SECRET_PATH }} subscription_id | subscription_id
+            ${{ secrets.VAULT_SECRET_PATH }} tenant_id | tenant_id
+
     
     - name: Print Secret Data
       run: |
-        echo "${{ steps.secretdata.outputs.CLIENT_ID }}" >> client.txt
-        cat client.txt
+        echo "${{ steps.secretdata.outputs.client_id }}"
+        echo "${{ steps.secretdata.outputs.container_name }}"
+        echo "${{ steps.secretdata.outputs.resource_group_name }}"
+        echo "${{ steps.secretdata.outputs.storage_account }}"
+        echo "${{ steps.secretdata.outputs.subscription_id }}"
+        echo "${{ steps.secretdata.outputs.tenant_id }}"
+        
     
