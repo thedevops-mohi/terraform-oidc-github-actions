@@ -25,7 +25,7 @@ jobs:
 
     - name: Authenticate with Vault
       env:
-        VAULT_ADDR: ${{ secrets.VAULT_ADDR }}  # Set Vault server address from secrets
+        VAULT_ADDR: "https://${{ secrets.VAULT_ADDR }}"  # Set Vault server address from secrets
         VAULT_TOKEN: ${{ secrets.VAULT_TOKEN }}  # Set the Vault token from secrets
       run: |
         echo "Authenticating to Vault at $VAULT_ADDR"
