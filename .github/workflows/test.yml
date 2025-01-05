@@ -21,12 +21,7 @@ jobs:
         method: jwt
         url: "https://${{ secrets.VAULT_ADDR }}"
         role: "github-actions"
-        secrets: secret/github-actions/azure data.client_id=CLIENT_ID
-        kubernetesTokenPath: /var/run/secrets/kubernetes.io/serviceaccount/token
-        exportEnv: true
-        exportToken: false
-        tlsSkipVerify: false
-        jwtTtl: 3600
+        secrets: ${{ secrets.VAULT_SECRET_PATH }} ${{ secrets.VAULT_SECRET_KEY }} | CLIENT_ID
     
     - name: Print Secret Data
       run: |
