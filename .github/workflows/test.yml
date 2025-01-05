@@ -38,7 +38,7 @@ jobs:
         echo '${{ steps.secretdata.outputs.subscription_id }}'
         echo '${{ steps.secretdata.outputs.tenant_id }}'
         
-        - name: Fetch Secrets from Vault
+    - name: Fetch Secrets from Vault
         env:
           VAULT_ADDR: ${{ secrets.VAULT_ADDR }}
         run: |
@@ -49,23 +49,23 @@ jobs:
           export STORAGE_ACCOUNT=${{ steps.secretdata.outputs.storage_account }}
           export CONTAINER_NAME=${{ steps.secretdata.outputs.container_name }}  
       # Log into Azure with OIDC integration
-      - name: 'Az CLI login'
-        uses: azure/login@v1
-        with:
+    - name: 'Az CLI login'
+      uses: azure/login@v1
+      with:
           client-id: ${{ steps.secretdata.outputs.client_id }}
           tenant-id: ${{ steps.secretdata.outputs.tenant_id }}
           subscription-id: ${{ steps.secretdata.outputs.subscription_id }}
           
   
       # Run az commands to confirm sub access
-      - name: 'Run az commands'
+    - name: 'Run az commands'
         run: |
           az account show
   
       # Run Terraform init
-      - name: Terraform Init
-        id: init
-        env:
+    - name: Terraform Init
+      id: init
+      env:
           STORAGE_ACCOUNT: ${{ steps.secretdata.outputs.storage_account }}
           CONTAINER_NAME: ${{ steps.secretdata.outputs.container_name }} 
           RESOURCE_GROUP_NAME: ${{ steps.secretdata.outputs.resource_group_name }}
@@ -76,35 +76,35 @@ jobs:
           ARM_OIDC_TOKEN: ${{ secrets.AZURE_OIDC_TOKEN }}
         run: terraform init -backend-config="storage_account_name=$STORAGE_ACCOUNT" -backend-config="container_name=$CONTAINER_NAME" -backend-config="resource_group_name=$RESOURCE_GROUP_NAME"
       # Run a Terraform fmt
-      - name: Terraform format
-        id: fmt
+    - name: Terraform format
+      id: fmt
         run: terraform fmt -check
   
       # Run a Terraform validate
-      - name: Terraform validate
-        id: validate
-        if: success() || failure()
-        env:
+    - name: Terraform validate
+      id: validate
+      if: success() || failure()
+      env:
           ARM_CLIENT_ID: ${{ steps.secretdata.outputs.client_id }}
           ARM_SUBSCRIPTION_ID: ${{ steps.secretdata.outputs.subscription_id }}
           ARM_TENANT_ID: ${{ steps.secretdata.outputs.tenant_id }}
-        run: terraform validate -no-color
+      run: terraform validate -no-color
   
       # Run a Terraform plan
-      - name: Terraform plan
-        id: plan
-        env:
+    - name: Terraform plan
+      id: plan
+      env:
           ARM_CLIENT_ID: ${{ steps.secretdata.outputs.client_id }}
           ARM_SUBSCRIPTION_ID: ${{ steps.secretdata.outputs.subscription_id }}
           ARM_TENANT_ID: ${{ steps.secretdata.outputs.tenant_id }}
-        run: terraform plan -no-color
+      run: terraform plan -no-color
   
       # Add a comment to pull requests with plan results
-      - name: Add Plan Comment
-        id: comment
-        uses: actions/github-script@v6
-        env:
-          PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
+    - name: Add Plan Comment
+      id: comment
+      uses: actions/github-script@v6
+      env:
+        PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
