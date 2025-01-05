@@ -1,0 +1,27 @@
+name: Retrieve Secrets from Vault
+
+on: push
+
+permissions:
+    id-token: write
+    contents: read 
+
+jobs:
+  retrieve-secrets:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Retrive Secret
+      id: secretdata
+      uses: hashcorp/vault-action@v2.4.0
+      with:
+        method: jwt
+        url: ${{ secrets.VAULT_ADDR }}
+        role: "github-actions"
+        secrets: secret/data/github-actions/azure client_id | CLIENT_ID
+    - name: Print Secret Data
+      run: |
+        echo '${{ steps.secretdata.outputs.CLIENT_ID }}'
