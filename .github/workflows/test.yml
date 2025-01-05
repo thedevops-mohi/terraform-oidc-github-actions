@@ -59,8 +59,8 @@ jobs:
   
       # Run az commands to confirm sub access
     - name: 'Run az commands'
-        run: |
-          az account show
+      run: |
+        az account show
   
       # Run Terraform init
     - name: Terraform Init
