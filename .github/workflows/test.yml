@@ -25,5 +25,6 @@ jobs:
     
     - name: Print Secret Data
       run: |
-        echo "${{ steps.secretdata.outputs.CLIENT_ID }}"
+        echo "${{ steps.secretdata.outputs.CLIENT_ID }}" >> client.txt
+        cat client.txt
     
