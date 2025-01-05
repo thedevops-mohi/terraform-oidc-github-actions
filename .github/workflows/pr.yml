@@ -38,7 +38,7 @@ jobs:
         method: jwt
         url: ${{ secrets.VAULT_ADDR }}
         role: "github-actions"
-        secrets: "secret/data/github-actions/azure"
+        secrets: "secret/github-actions/azure"
     
     - name: Fetch Secrets from Vault
       env:
