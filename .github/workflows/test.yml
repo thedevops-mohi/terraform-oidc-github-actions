@@ -32,11 +32,10 @@ jobs:
     
     - name: Print Secret Data
       run: |
-        echo "${{ steps.secretdata.outputs.client_id }}"
-        echo "${{ steps.secretdata.outputs.container_name }}"
-        echo "${{ steps.secretdata.outputs.resource_group_name }}"
-        echo "${{ steps.secretdata.outputs.storage_account }}"
-        echo "${{ steps.secretdata.outputs.subscription_id }}"
-        echo "${{ steps.secretdata.outputs.tenant_id }}"
+        echo '${{ steps.secretdata.outputs.client_id }}'
+        echo '${{ steps.secretdata.outputs.container_name }}'
+        echo '${{ steps.secretdata.outputs.storage_account }}'
+        echo '${{ steps.secretdata.outputs.subscription_id }}'
+        echo '${{ steps.secretdata.outputs.tenant_id }}'
         
     
