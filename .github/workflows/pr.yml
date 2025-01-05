@@ -35,10 +35,10 @@ jobs:
     - name: Retrieve secret from Vault
       uses: hashicorp/vault-action@main
       with:
+        method: jwt
         url: ${{ secrets.VAULT_ADDR }}
-        method: approle
-        roleId: ${{ secrets.VAULT_ROLE_ID }}
-        secretId: ${{ secrets.VAULT_SECRET_ID }}
+        role: "github-actions"
+        secrets: "secret/data/github-actions/azure"
     
     - name: Fetch Secrets from Vault
       env:
