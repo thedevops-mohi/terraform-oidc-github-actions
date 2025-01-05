@@ -27,6 +27,6 @@ jobs:
     
     - name: Print Secret Data
       run: |
-        echo '${{ steps.secretdata.outputs.client_id }}'
+        echo 'CLIENT_ID: ${{ steps.secretdata.outputs.client_id }}'
         
     
