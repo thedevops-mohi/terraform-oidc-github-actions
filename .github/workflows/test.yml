@@ -13,7 +13,10 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-
+        # Install the latest version of Terraform CLI 
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+    
     - name: Retrieve Secret
       id: secretdata
       uses: hashicorp/vault-action@v2.4.0
