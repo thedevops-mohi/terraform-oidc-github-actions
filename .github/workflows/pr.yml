@@ -9,10 +9,11 @@ env:
   TF_LOG: INFO
 
 permissions:
-      id-token: write
-      issues: write
-      pull-requests: write
-      contents: read
+  id-token: write
+  issues: write
+  pull-requests: write
+  contents: read
+
 jobs: 
   pr-infra-check:
     runs-on: ubuntu-latest
@@ -33,24 +34,23 @@ jobs:
 
     - name: Retrieve secret from Vault
       uses: hashicorp/vault-action@main
-
       with:
         method: jwt
         url: ${{ secrets.VAULT_ADDR }}
         role: "github-actions"
         secrets: "secret/data/github-actions/azure"
     
-
     - name: Fetch Secrets from Vault
       env:
         VAULT_ADDR: ${{ secrets.VAULT_ADDR }}
       run: |
-        export CLIENT_ID=$(vault kv get -field=client_id secret/github-actions/azure)
-        export TENANT_ID=$(vault kv get -field=tenant_id secret/github-actions/azure)
-        export SUBSCRIPTION_ID=$(vault kv get -field=subscription_id secret/github-actions/azure)
-        export RESOURCE_GROUP_NAME=$(vault kv get -field=resource_group_name secret/github-actions/azure)
-        export STORAGE_ACCOUNT=$(vault kv get -field=storage_account secret/github-actions/azure)
-        export CONTAINER_NAME=$(vault kv get -field=container_name secret/github-actions/azure)  
+        export CLIENT_ID=$(vault kv get -field=client_id secret/data/github-actions/azure)
+        export TENANT_ID=$(vault kv get -field=tenant_id secret/data/github-actions/azure)
+        export SUBSCRIPTION_ID=$(vault kv get -field=subscription_id secret/data/github-actions/azure)
+        export RESOURCE_GROUP_NAME=$(vault kv get -field=resource_group_name secret/data/github-actions/azure)
+        export STORAGE_ACCOUNT=$(vault kv get -field=storage_account secret/data/github-actions/azure)
+        export CONTAINER_NAME=$(vault kv get -field=container_name secret/data/github-actions/azure)
+        
     # Log into Azure with OIDC integration
     - name: 'Az CLI login'
       uses: azure/login@v1
@@ -78,6 +78,7 @@ jobs:
         ARM_USE_OIDC: "true"
         ARM_OIDC_TOKEN: ${{ secrets.AZURE_OIDC_TOKEN }}
       run: terraform init -backend-config="storage_account_name=$STORAGE_ACCOUNT" -backend-config="container_name=$CONTAINER_NAME" -backend-config="resource_group_name=$RESOURCE_GROUP_NAME"
+
     # Run a Terraform fmt
     - name: Terraform format
       id: fmt
